@@ -24,7 +24,7 @@ Technologies used in this app are Firebase Firestore for database to store users
 
 ## Setup
 
-Just set your firebase configurations in the `\firebase.js` file.
+Just set your firebase configurations in the `.\firebase.js` file.
 
 ```
   var config = {
