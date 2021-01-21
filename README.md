@@ -11,7 +11,7 @@
 [![MIT License][license-shield]][license-url]
 -->
 
-<img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611203953/icon_i1xo18.png" align="right"/>
+<img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611204105/icon_voskbr.png" align="right"/>
 
 # Messaging App [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/codeninja02)
 > A simple messaging app using Firebase Auth and Cloud Firestore.
