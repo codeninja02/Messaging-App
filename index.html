@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging App</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        const viewHeight = window.innerHeight;
+        const viewWidth = window.innerWidth;
+    </script>
+</head>
+<body>
+
+    <div id="superbody" class="superbody">
+
+        <div class="section__1">
+
+            <div class="signup">
+
+                <div class="heading-1">
+                    Create<br>
+                    Account
+                </div>
+
+                <div class="email-input-1">
+                    <span>Username</span>
+                    <span id="usernameAddonsCont">
+                        <span class="username__s_1"><ion-icon name="ellipse"></ion-icon></span>
+                        <span class="username__tick_1">
+                            <ion-icon name="checkmark-done"></ion-icon>
+                        </span>
+                        <span class="username__s_1_L">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                               width="14px" height="14px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                            <path fill="#fff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                              <animateTransform attributeType="xml"
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 25 25"
+                                to="360 25 25"
+                                dur="0.6s"
+                                repeatCount="indefinite"/>
+                              </path>
+                            </svg>
+                        </span>
+                        <span class="username__s_2">This username already exists</span>
+                    </span>
+                </div>
+                <div class="email-input">
+                    <input id="emailSignUp1" placeholder="Create username" type="text" class="e--input-1" autocomplete="off" spellCheck="false" onkeydown="limitKeypress(event,this.value,20)">
+                </div>
+
+                <div class="password-input-1">
+                    Password
+                </div>
+                <div class="password-input">
+                    <input id="passwordSignUp1" placeholder="Create password" type="password" class="e--password-1" autocomplete="off" spellCheck="false" onkeydown="limitKeypress(event,this.value,40)">
+                </div>
+
+                <div id="ch1C" class="check-container-su-1">
+                    <ion-icon id="ch1" class="checkmark-disabled" name="checkmark-outline"></ion-icon>
+
+                    <div class="checkmark-container-1">
+                        I accept the <u class="u-1">terms and conditions</u>.
+                    </div>
+                </div>
+
+                <div id="ch2C" class="check-container-su-2">
+                    <ion-icon id="ch2" class="checkmark-disabled" name="checkmark-outline"></ion-icon>
+
+                    <div class="checkmark-container-1">
+                        I'll be polite and respectful in the chat.
+                    </div>
+                </div>
+
+                <div id="signUpBtn1" class="signup-btn">
+                    <span id="signUpText1">
+                        Sign Up
+                    </span>
+                    <div class="signUpLoader1" title="2">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                           width="16px" height="16px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#fff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                          <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                          </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="go-to-login-container">
+                    Already have an account? <span id="goToLogin">Log In</span>
+                </div>
+
+            </div>
+
+            <div class="login">
+
+                <div class="heading-1">
+                    Welcome<br>
+                    Back
+                </div>
+
+                <div class="email-input-1">
+                    <span>Username</span>
+                </div>
+                <div class="email-input">
+                    <input id="emailLogIn2" placeholder="Enter Username" type="text" class="e--input-1" autocomplete="off" spellCheck="false" onkeydown="limitKeypress(event,this.value,20)">
+                </div>
+
+                <div class="password-input-1">
+                    Password
+                </div>
+                <div class="password-input">
+                    <input id="passwordLogIn2" placeholder="Enter Password" type="password" class="e--password-1" autocomplete="off" spellCheck="false" onkeydown="limitKeypress(event,this.value,40)">
+                </div>
+
+                <div id="ch3C" class="check-container-su-1">
+                    <ion-icon id="ch3" class="checkmark-disabled" name="checkmark-outline"></ion-icon>
+
+                    <div class="checkmark-container-1">
+                        I accept the <u class="u-1">terms and conditions</u>.
+                    </div>
+                </div>
+
+                <div id="ch4C" class="check-container-su-2">
+                    <ion-icon id="ch4" class="checkmark-disabled" name="checkmark-outline"></ion-icon>
+
+                    <div class="checkmark-container-1">
+                        I'll be polite and respectful in the chat.
+                    </div>
+                </div>
+
+                <div id="signUpBtn2" class="signup-btn">
+                    <span id="signUpText2">
+                        Log In
+                    </span>
+                    <div class="signUpLoader2" title="2">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                           width="16px" height="16px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#fff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                          <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                          </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="go-to-signup-container">
+                    New here? <span id="goToSignUp">Sign Up</span>
+                </div>
+
+            </div>
+            
+        </div>
+
+        <div class="bottom-toast-1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nulla.
+        </div>
+        
+    </div>
+
+    <div class="title-bar-t">
+        <div class="title-name-t">
+            Messages
+        </div>
+        <div id="logoutBtn1" class="title-logout-t">
+            <ion-icon name="log-out"></ion-icon>
+        </div>
+    </div>
+
+    <div id="superbody2" class="superbody-2">
+
+        <div class="title-bar-1 hidden">
+            <div class="title-name-1">
+                Messages
+            </div>
+            <div id="logoutBtn1" class="title-logout-1">
+                <ion-icon name="log-out"></ion-icon>
+            </div>
+        </div>
+
+        <div class="section__2">
+
+            <!-- <div class="title-bar-1">
+                <div class="title-name-1">
+                    Messages
+                </div>
+                <div id="logoutBtn1" class="title-logout-1">
+                    <ion-icon name="log-out"></ion-icon>
+                </div>
+            </div> -->
+
+            <div class="search-bar-1">
+                <div class="search-icon-c-1">
+                    <ion-icon name="search"></ion-icon>
+                </div>
+                <div class="search-input-1">
+                    <input placeholder="Search" id="searchInput" type="text" class="search-inpt" autocomplete="off" spellCheck="false">
+                </div>
+            </div>
+
+            <div id="messagesContainer" class="messages-container">
+
+                <span id="messagesLoaderContainer" class="messages-loader">
+                    <svg class="load" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                       width="26px" height="26px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                    <path fill="#488dff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                      </path>
+                    </svg>
+                </span>
+
+                <div class="groups-container">
+
+                    <!-- <div class="group" ripple-press-expand-time="1" ripple-release-expand-time="0.5">
+                    <div class="group-container-1">
+                        <div class="group-icon-1">
+                            <img class="group-icon-image" src="https://secureservercdn.net/45.40.149.159/2m3.b32.myftpupload.com/wp-content/uploads/2017/06/small-groups-icon-300x300.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="group-container-2">
+                        <div class="group-title-1">
+                            Heading
+                        </div>
+                        <div class="group-message-1">
+                            Spoiler Message
+                        </div>
+                    </div>
+                    <div class="group-container-3">
+                        <div class="group-timestamp-1">
+                            18:20
+                        </div>
+                    </div>
+                    </div> -->
+
+                </div>
+
+                <div class="groups-filter-container">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="superbody3" class="superbody-3">
+
+        <div class="section__3">
+
+            <div class="title-bar-2">
+                <div id="goBackToGroupScr" class="side-menu-icon-2 ripple" ripple-press-expand-time="0.2" ripple-release-expand-time="0.2" ripple-opacity="0.2">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                </div>
+                <div class="title-name-2">
+                    Messages
+                </div>
+            </div>
+
+            <div class="chat-a-up-c">
+                <div id="chatAUPC" class="chat-aupc-loader hide">
+                    <svg class="load" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                       width="26px" height="26px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                    <path fill="#488dff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                      </path>
+                    </svg>
+                </div>
+                <div class="chat-aupc-text hide">
+                    No messages found
+                </div>
+            </div>
+
+            <div id="chatAreaContainer" class="chat-area-1">
+
+                <!-- <div class="chat-box-item sender-chat-container">
+                    <div class="sender-pfp-icon">
+                        H
+                    </div>
+                    <div class="sender-msg-container">
+                        <div class="sender-name">
+                            <span class="s-n--1">Letsintegreat</span>
+                        </div>
+                        <div class="sender-gif">
+                            <img class="sender-gif-img" src="https://steamuserimages-a.akamaihd.net/ugc/948455238665292615/A916B1B7B504F4745BC230BE36AA5C19164998FA/">
+                        </div>
+                        <div class="sender-time">
+                            02:12
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="chat-box-item rec-chat-container">
+                    <div class="rec-m-m-c-1" style="background: #cddaff;">
+                        <div class="rec-msg-c">
+                            <div class="sender-gif">
+                                <img class="sender-gif-img" src="https://steamuserimages-a.akamaihd.net/ugc/948455238665292615/A916B1B7B504F4745BC230BE36AA5C19164998FA/">
+                            </div>
+                        </div>
+                        <div class="rec-time" style="color: #243567;">
+                            14:20
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="chat-box-item sender-chat-container">
+                    <div class="sender-pfp-icon">
+                        H
+                    </div>
+                    <div class="sender-msg-container">
+                        <div class="sender-name">
+                            <span class="s-n--1">Letsintegreat</span>
+                            <span class="s-n--2">PRO</span>
+                        </div>
+                        <div class="sender-message">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est tempore recusandae dolorum.
+                        </div>
+                        <div class="sender-time">
+                            02:12
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-box-item rec-chat-container">
+                    <div class="rec-m-m-c-1">
+                        <div class="rec-msg-c">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        </div>
+                        <div class="rec-time">
+                            14:20
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+
+            <div id="stickerOptsContainer" class="sticker-opts-container">
+                <div class="sticker-opts-c-2">
+                    <div class="sticker" id="sticker1">
+                        <img src="https://steamuserimages-a.akamaihd.net/ugc/948455238665292615/A916B1B7B504F4745BC230BE36AA5C19164998FA/" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker2">
+                        <img src="https://i.pinimg.com/originals/0b/9d/b5/0b9db507469a0a92401c742a216a5fc8.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker3">
+                        <img src="https://i.gifer.com/4eXL.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker4">
+                        <img src="https://media.discordapp.net/attachments/785173137854955521/797442888078196746/caa2.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker5">
+                        <img src="https://media.tenor.com/images/760ee8f212d72613a2e23ab2954893bd/tenor.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker6">
+                        <img src="https://images-ext-1.discordapp.net/external/8AV1OzrAVOgGCNf-7D-Vvs1TrVEPOcKzmj3RPcVx-B8/https/media.discordapp.net/attachments/361066413923893249/792508564232732722/aqua.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker7">
+                        <img src="https://media.tenor.com/images/bf139869d81cd9b73144d6b941ebb733/tenor.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker8">
+                        <img src="https://64.media.tumblr.com/8ec8fc212104efc693b15c915d78da17/3e951e5af26c5a39-35/s540x810/f71eb68df86ce794dbb4de93a7d4593d86ce44d6.gifv" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker9">
+                        <img src="https://i.pinimg.com/originals/25/e0/45/25e0450a39f1c01fef9cac41a2da14bb.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker10">
+                        <img src="https://media.tenor.com/images/acc4116372dcc4b342cb1a00ae657151/tenor.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker11">
+                        <img src="https://media.tenor.com/images/00a6ecf0b9c158c3ed27425cc94a2392/tenor.gif" class="sticker-img">
+                    </div>
+                    <div class="sticker" id="sticker12">
+                        <img src="https://media3.giphy.com/media/fxe8v45NNXFd4jdaNI/giphy.gif" class="sticker-img">
+                    </div>
+                    <div class="div-mr-6p">6px</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container-1">
+                <div class="cic-1">
+
+                    <div id="stickerOpenBtn" class="sticker-ni-1">
+                        <ion-icon name="gift"></ion-icon>
+                    </div>
+
+                    <div class="message-box-container">
+                        <input placeholder="Write your message" id="messageInput" type="text" class="message-input" autocomplete="off" spellCheck="false">
+                    </div>
+                    <div id="messageBtnContainer" class="message-btn-container">
+                        <ion-icon class="mbc-icon-1" name="send"></ion-icon>
+                    </div>
+                    <div id="messageBBLoading4" class="messageBBLoading4">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                       width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                            <path fill="#3165ff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Complete library here- https://swalt.netlify.app -->
+    <div id="alert" class="alert">
+        <div class="alert-container">
+            <div class="alert-heading-c">
+                <div class="alert-heading-icon">
+                    <ion-icon name="alert-circle"></ion-icon>
+                </div>
+                <div class="alert-heading">
+                    Heading
+                </div>
+            </div>
+            <div class="alert-description">
+                Description
+            </div>
+            <div class="alert-button">
+                Close
+            </div>
+        </div>
+    </div>
+
+    <!-- ToolTip -->
+    <div id="tooltipContainer">
+        <div id="tooltip" class="tooltip">
+            <div id="tooltipText" class="tooltip-text">
+                Hello World
+            </div>
+            <div class="tooltip-d-arrow">
+                <ion-icon name="caret-down-sharp"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <div id="tooltipContainer2">
+        <div id="tooltip2" class="tooltip2">
+            <div id="tooltipText2" class="tooltip-text-2">
+                Hello World
+            </div>
+            <div class="tooltip-d-arrow-2">
+                <ion-icon name="caret-down-sharp"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash__screen">
+
+        <div class="splash_loader load" title="2">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               width="32px" height="32px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="#5b90e2" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+              </path>
+            </svg>
+        </div>
+        
+    </div>
+
+    <script>
+        const superbody = document.getElementById("superbody");
+        superbody.style.height = viewHeight + "px";
+        superbody.style.width = viewWidth + "px";
+
+        const superbody2 = document.getElementById("superbody2");
+        superbody2.style.height = viewHeight + "px";
+        superbody2.style.width = viewWidth + "px";
+
+        const signup = document.querySelector(".signup");
+        signup.style.height = viewHeight + "px";
+        signup.style.width = viewWidth + "px";
+
+        const login = document.querySelector(".login");
+        login.style.height = viewHeight + "px";
+        login.style.width = viewWidth + "px";
+
+        // const superbody3 = document.getElementById("superbody3");
+        // superbody3.style.height = viewHeight + "px";
+        // superbody3.style.width = viewWidth + "px";
+
+        document.querySelector(".section__1").style.transform = "translateX(" + viewWidth + "px";
+        document.querySelector(".login").style.display = "none";
+
+        function reportWindowSize() {
+            superbody.style.height = viewHeight + "px";
+            superbody.style.width = viewWidth + "px";
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@5.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <!-- Profanity Checker -->
+    <script src="https://res.cloudinary.com/dpj9ddsjf/raw/upload/v1611045447/profanityChecker_tcic3x.js"></script>
+    <!-- Ripple JS library -->
+    <script>
+        var ripple=function(){function rippleStart(e){rippleContainer=getRippleContainer(e.target),("0"==rippleContainer.getAttribute("animating")||!rippleContainer.hasAttribute("animating"))&&e.target.className.indexOf("ripple")>-1&&(rippleContainer.setAttribute("animating","1"),offsetX="number"==typeof e.offsetX?e.offsetX:e.touches[0].clientX-e.target.getBoundingClientRect().left,offsetY="number"==typeof e.offsetY?e.offsetY:e.touches[0].clientY-e.target.getBoundingClientRect().top,fullCoverRadius=Math.max(Math.sqrt(Math.pow(offsetX,2)+Math.pow(offsetY,2)),Math.sqrt(Math.pow(e.target.clientWidth-offsetX,2)+Math.pow(e.target.clientHeight-offsetY,2)),Math.sqrt(Math.pow(offsetX,2)+Math.pow(e.target.clientHeight-offsetY,2)),Math.sqrt(Math.pow(offsetY,2)+Math.pow(e.target.clientWidth-offsetX,2))),expandTime=e.target.getAttribute("ripple-press-expand-time")||3,rippleContainer.style.transition="transform "+expandTime+"s ease-out, box-shadow 0.1s linear",rippleContainer.style.background=e.target.getAttribute("ripple-color")||"white",rippleContainer.style.opacity=e.target.getAttribute("ripple-opacity")||"0.6",rippleContainer.style.boxShadow=e.target.getAttribute("ripple-shadow")||"none",rippleContainer.style.top=offsetY+"px",rippleContainer.style.left=offsetX+"px",rippleContainer.style.transform="translate(-50%, -50%) scale("+fullCoverRadius/100+")")}function rippleEnd(e){rippleContainer=getRippleContainer(e.target),"1"==rippleContainer.getAttribute("animating")&&(rippleContainer.setAttribute("animating","2"),backgroundA=window.getComputedStyle(rippleContainer,null).getPropertyValue("background"),destinationRadius=e.target.clientWidth+e.target.clientHeight,rippleContainer.style.transition="none",expandTime=e.target.getAttribute("ripple-release-expand-time")||.4,rippleContainer.style.transition="transform "+expandTime+"s linear, backgroundA "+expandTime+"s linear, opacity "+expandTime+"s ease-in-out",rippleContainer.style.transform="translate(-50%, -50%) scale("+destinationRadius/100+")",rippleContainer.style.background="radial-gradient(transparent 10%, "+backgroundA+" 40%)",rippleContainer.style.opacity="0",e.target.dispatchEvent(new CustomEvent("ripple-button-click",{target:e.target})),eval(e.target.getAttribute("onrippleclick")))}function rippleRetrieve(e){rippleContainer=getRippleContainer(e.target),"translate(-50%, -50%) scale(0)"==rippleContainer.style.transform&&rippleContainer.setAttribute("animating","0"),"1"==rippleContainer.getAttribute("animating")&&(rippleContainer.setAttribute("animating","3"),collapseTime=e.target.getAttribute("ripple-leave-collapse-time")||.4,rippleContainer.style.transition="transform "+collapseTime+"s linear, box-shadow "+collapseTime+"s linear",rippleContainer.style.boxShadow="none",rippleContainer.style.transform="translate(-50%, -50%) scale(0)")}function getRippleContainer(e){for(childs=e.childNodes,ii=0;ii<childs.length;ii++)try{if(childs[ii].className.indexOf("rippleContainer")>-1)return childs[ii]}catch(t){}return e}window.addEventListener("load",function(){css=document.createElement("style"),css.type="text/css",css.innerHTML=".ripple { overflow: hidden !important; position: relative; } .ripple .rippleContainer { display: block; height: 200px !important; width: 200px !important; padding: 0px 0px 0px 0px; border-radius: 50%; position: absolute !important; top: 0px; left: 0px; transform: translate(-50%, -50%) scale(0); -webkit-transform: translate(-50%, -50%) scale(0); -ms-transform: translate(-50%, -50%) scale(0); background-color: transparent; }  .ripple * {pointer-events: none !important;}",document.head.appendChild(css),ripple.registerRipples()});var ripple={registerRipples:function(){for(rippleButtons=document.getElementsByClassName("ripple"),i=0;i<rippleButtons.length;i++)rippleButtons[i].addEventListener("touchstart",function(e){rippleStart(e)},{passive:!0}),rippleButtons[i].addEventListener("touchmove",function(e){if(e.target.hasAttribute("ripple-cancel-on-move"))return void rippleRetrieve(e);try{overEl=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY).className.indexOf("ripple")>=0}catch(t){overEl=!1}overEl||rippleRetrieve(e)},{passive:!0}),rippleButtons[i].addEventListener("touchend",function(e){rippleEnd(e)},{passive:!0}),rippleButtons[i].addEventListener("mousedown",function(e){rippleStart(e)},{passive:!0}),rippleButtons[i].addEventListener("mouseup",function(e){rippleEnd(e)},{passive:!0}),rippleButtons[i].addEventListener("mousemove",function(e){!e.target.hasAttribute("ripple-cancel-on-move")||0==e.movementX&&0==e.movementY||rippleRetrieve(e)},{passive:!0}),rippleButtons[i].addEventListener("mouseleave",function(e){rippleRetrieve(e)},{passive:!0}),rippleButtons[i].addEventListener("transitionend",function(e){("2"==e.target.getAttribute("animating")||"3"==e.target.getAttribute("animating"))&&(e.target.style.transition="none",e.target.style.transform="translate(-50%, -50%) scale(0)",e.target.style.boxShadow="none",e.target.setAttribute("animating","0"))},{passive:!0}),getRippleContainer(rippleButtons[i])==rippleButtons[i]&&(rippleButtons[i].innerHTML+='<div class="rippleContainer"></div>')},ripple:function(t){t.className.indexOf("ripple")<0||(rect=t.getBoundingClientRect(),e={target:t,offsetX:rect.width/2,offsetY:rect.height/2},rippleStart(e),rippleEnd(e))}};return ripple}();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="firebase.js"></script>
+    <scrip src="animationEvent.js"></scrip>
+    <script src="script.js"></script>
+</body>
+</html>
