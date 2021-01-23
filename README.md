@@ -37,7 +37,7 @@ Just set your firebase configurations in the `.\firebase.js` file.
   }
 ```
 
-Next step is to create groups in the database.
+Next step is to just create groups in the database.
 
 ## Social Links
 
