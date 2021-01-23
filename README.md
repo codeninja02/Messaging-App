@@ -21,6 +21,7 @@ You can create your personal account using a username and a password, chat in va
 Technologies used in this app are Firebase Firestore for database to store users messages and information, jQuery and other basic web technologies - HTML, CSS and JavaScript.
 
 <img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415838/Frame_15_smkv1m.png" align="left"/>
+<img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415837/Frame_16_i9c2wl.png" align="right"/>
 <!--![Messaging App Preview](https://firebasestorage.googleapis.com/v0/b/scholar-engine-32b26.appspot.com/o/2%201.png?alt=media&token=ea4b0114-6023-4264-98d1-133724891f8c)-->
 
 ## Setup
