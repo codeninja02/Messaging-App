@@ -22,6 +22,7 @@ Technologies used in this app are Firebase Firestore for database to store users
 
 <!-- <img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415838/Frame_15_smkv1m.png" align="left"/> -->
 ![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415838/Frame_15_smkv1m.png)
+![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415837/Frame_16_i9c2wl.png)
 
 ## Setup
 
