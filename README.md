@@ -26,9 +26,9 @@ Technologies used in this app are Firebase Firestore for database to store users
 
 ## Setup
 
-Just set your firebase configurations in the `.\firebase.js` file.
+Just set up your firebase configurations in the `firebase.js` file.
 
-```
+```javascript
   var config = {
     apiKey: "<YOUR_API_KEY>",
     authDomain: '<AUTH_DOMAIN>',
@@ -40,8 +40,14 @@ Just set your firebase configurations in the `.\firebase.js` file.
 
 Next step is to just create groups in the database.
 
-## Social Links
+## 💻 Author
 
-- [INSTAGRAM](https://www.instagram.com/codeninja02/)
+- [Utsav Prasad](https://codeninja02.netlify.app/)
+
+## 🔗 Social Links
+
+- [Instagram](https://www.instagram.com/codeninja02/)
+- [Twitter](https://twitter.com/codeninja02/)
+- [Website](https://codeninja02.netlify.app/)
 
 
