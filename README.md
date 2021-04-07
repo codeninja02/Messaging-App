@@ -13,20 +13,20 @@
 
 <img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611204105/icon_voskbr.png" align="right"/>
 
-# Messaging App [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/codeninja02)
-> A simple messaging app using Firebase Auth and Cloud Firestore.
+# 💬 Messaging App
+### A simple messaging app using Firebase Authentication and Cloud Firestore.
 
-You can create your personal account using a username and a password, chat in various groups through text and gifs, supports pre programmed bots and many more fun stuff!
+You can create your personal account using a username and a password, chat in various groups through text and gifs, supports pre-programmed bots and many more fun stuff!
 
-Technologies used in this app are Firebase Firestore for database to store users messages and information, jQuery and other basic web technologies - HTML, CSS and JavaScript.
+Technologies used in this web app are Firebase Firestore for database to store users messages and information, jQuery and other basic web technologies - HTML, CSS and JavaScript.
 
-<!-- <img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611415838/Frame_15_smkv1m.png" align="left"/> -->
-![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611416288/Frame_15_tj30lv.png)
-![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611416288/Frame_16_w1ezks.png)
+![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1617838444/scr1_s1yszs.png)
+![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1617838445/scr2_ap7thx.png)
+![Messaging App Preview](https://res.cloudinary.com/dpj9ddsjf/image/upload/v1617838447/scr3_dvhzfi.png)
 
-## Setup
+## ⚙️ Setup
 
-Just set up your firebase configurations in the `firebase.js` file.
+Set up your firebase configurations in the `firebase.js` file.
 
 ```javascript
   var config = {
