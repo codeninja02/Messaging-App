@@ -1,5 +1,4 @@
-var firebaseConfig = {
-
+firebase.initializeApp({
     apiKey: "<>",
     authDomain: "<>",
     projectId: "<>",
@@ -7,10 +6,7 @@ var firebaseConfig = {
     messagingSenderId: "<>",
     appId: "<>",
     measurementId: "<>"
-
-};
-
-firebase.initializeApp(firebaseConfig);
+});
 const db = firebase.firestore();
 
 db.settings({ timestampsInSnapshots: true });
