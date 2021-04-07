@@ -10,6 +10,20 @@ var unsubscribe;
 // Input Management
 
 var max_chars = 20;
+
+var groups_array_name = [
+    "General Discussion",
+    "Web Development",
+    "Code & Ask",
+    "Challenges",
+    "Off Topic General",
+    "Anime",
+    "Music",
+    "Maths & Science",
+    "Javascript",
+    "Python"
+];
+
 var stickers_array = [
     "https://steamuserimages-a.akamaihd.net/ugc/948455238665292615/A916B1B7B504F4745BC230BE36AA5C19164998FA/",
     "https://i.pinimg.com/originals/0b/9d/b5/0b9db507469a0a92401c742a216a5fc8.gif",
@@ -43,7 +57,7 @@ $('#emailSignUp1').on('focusout', function () {
         $(".username__s_1").css({display: "none", filter: "opacity(0)"});
         $(".username__s_2").css({display: "none", filter: "opacity(0)"});
 
-        let docRef = db.collection("users").doc( $('#emailSignUp1').val().trim().toLowerCase() );
+        let docRef = db.collection("users624024").doc( $('#emailSignUp1').val().trim().toLowerCase() );
         docRef.get().then(function(doc) {
             $(".username__s_1_L").css({display: "none", filter: "opacity(0)"});
             if (doc.exists) {
@@ -102,7 +116,7 @@ function initializeScreen(){
     }, 800)
     setTimeout(function(){
         $("#splashScreen").css({display: "none"});
-    }, 1000)
+    }, 1000);
 }
 
 initializeScreen();
@@ -215,10 +229,10 @@ function showTooltip(msg, offset, height){
     }, 200);
     setTimeout(function(){
         $(".tooltip").css({filter: "opacity(0)", transform: "translateY(10px)"});
-    }, 2000)
+    }, 2000);
     setTimeout(function(){
         $("#tooltipContainer").css({display: "none"});
-    }, 2200)
+    }, 2200);
 }
 
 function showTooltip2(msg){
@@ -299,7 +313,7 @@ $("#signUpBtn1").on("click", function(){
                             color: userColor
                         };
 
-                        db.collection("users").doc($("#emailSignUp1").val().trim().toLowerCase()).set({
+                        db.collection("users624024").doc($("#emailSignUp1").val().trim().toLowerCase()).set({
                             name: $("#emailSignUp1").val().trim().toLowerCase(),
                             status: "normal",
                             color: userColor
@@ -400,7 +414,7 @@ $("#signUpBtn2").on("click", function(){
                     firebase.auth().signInWithEmailAndPassword($("#emailLogIn2").val().trim().toLowerCase() + "@user.com", $("#passwordLogIn2").val())
                     .then((user) => {
 
-                        let docRef = db.collection("users").doc($("#emailLogIn2").val().trim().toLowerCase());
+                        let docRef = db.collection("users624024").doc($("#emailLogIn2").val().trim().toLowerCase());
 
                         docRef.get().then(function(doc) {
                             if (doc.exists) {
@@ -480,6 +494,15 @@ $("#searchInput").on("focusout", function(){
     // $(".title-bar-t").css({background: "white"});
 });
 
+var DEBUG = false;
+if(!DEBUG){
+    if(!window.console) window.console = {};
+    var methods = ["log", "debug", "warn", "info"];
+    for(var i=0;i<methods.length;i++){
+        console[methods[i]] = function(){};
+    }
+}
+
 // setTimeout(function(){
 //     $(".signUpLoader2").css({transform: "translateY(32px)", filter: "opacity(0)"});
 //     setTimeout(function(){
@@ -512,30 +535,31 @@ var reRData;
 
 function setGroups(arg){
     $(".groups-container").html("");
-    for(let i = 0; i < reRData.length; i++){
-        let lastMsg;
-        if((reRData[i].data.lastMessage).length > 10){
-            lastMsg = (reRData[i].data.lastMessage).substring(0, 10) + '....';
-        } else {
-            lastMsg = reRData[i].data.lastMessage;
-        }
-        lastMsg = lastMsg.replace(/</g,"");
-        lastMsg = lastMsg.replace(/>/g,"");
-        lastMsg = lastMsg.replace(/\/>/g,"");
+    for(let i = 0; i < groups_array_name.length; i++){
+        let lastSender = checker(reRData[i].data.lastSender) ? reRData[i].data.lastSender : "***";
+        let lastMessage = checker(reRData[i].data.lastMessage) ? reRData[i].data.lastMessage : "***";
+        lastSender = ((lastSender).length > 10) ? (lastSender).substring(0, 10) + '...' : lastSender;
+        lastMessage = ((lastMessage).length > 10) ? (lastMessage).substring(0, 10) + '...' : lastMessage;
+        lastSender = lastSender.replace(/</g,"");
+        lastSender = lastSender.replace(/>/g,"");
+        lastSender = lastSender.replace(/\/>/g,"");
+        lastMessage = lastMessage.replace(/</g,"");
+        lastMessage = lastMessage.replace(/>/g,"");
+        lastMessage = lastMessage.replace(/\/>/g,"");
         let el = 
         `
         <div id="${reRData[i].id}" class="group">
             <div class="group-container-1">
                 <div class="group-icon-1">
-                    <img class="group-icon-image" src="${reRData[i].data.icon}" alt="icon">
+                    <img class="group-icon-image" src="https://cdn0.iconfinder.com/data/icons/twitter-ui-flat/48/Twitter_UI-19-512.png" alt="icon">
                 </div>
             </div>
             <div class="group-container-2">
                 <div class="group-title-1">
-                    ${reRData[i].data.name}
+                    ${groups_array_name[i]}
                 </div>
                 <div class="group-message-1">
-                ${"<b>" + reRData[i].data.lastSender + ": " + "</b>" + lastMsg}
+                ${"<b>" + lastSender + ": " + "</b>" + lastMessage}
                 </div>
             </div>
             <div class="group-container-3">
@@ -550,7 +574,7 @@ function setGroups(arg){
             if(unsubscribe !== undefined){
                 unsubscribe();
             }
-            showChatScreen(reRData[i].id, reRData[i].data.name);
+            showChatScreen(reRData[i].id, groups_array_name[i]);
         });
     }
     $(".group:last-child").addClass("group2");
@@ -559,18 +583,22 @@ function setGroups(arg){
 function setFilterGroups(arg){
     $(".groups-filter-container").html("");
     for(let i = 0; i < arg.length; i++){
-        let lastMsg;
-        if((arg[i].data.lastMessage).length > 10){
-            lastMsg = (arg[i].data.lastMessage).substring(0, 10) + '....';
-        } else {
-            lastMsg = arg[i].data.lastMessage;
-        }
+        let lastSender = checker(arg[i].data.lastSender) ? arg[i].data.lastSender : "***";
+        lastSender = ((lastSender).length > 10) ? (lastSender).substring(0, 10) + '...' : lastSender;
+        let lastMessage = checker(arg[i].data.lastMessage) ? arg[i].data.lastMessage : "***";
+        lastMessage = ((lastMessage).length > 10) ? (lastMessage).substring(0, 10) + '...' : lastMessage;
+        lastSender = lastSender.replace(/</g,"");
+        lastSender = lastSender.replace(/>/g,"");
+        lastSender = lastSender.replace(/\/>/g,"");
+        lastMessage = lastMessage.replace(/</g,"");
+        lastMessage = lastMessage.replace(/>/g,"");
+        lastMessage = lastMessage.replace(/\/>/g,"");
         let el = 
         `
         <div name="${arg[i].id}" class="group ${arg[i].id}">
             <div class="group-container-1">
                 <div class="group-icon-1">
-                    <img class="group-icon-image" src="${arg[i].data.icon}" alt="icon">
+                    <img class="group-icon-image" src="https://cdn0.iconfinder.com/data/icons/twitter-ui-flat/48/Twitter_UI-19-512.png" alt="icon">
                 </div>
             </div>
             <div class="group-container-2">
@@ -578,7 +606,7 @@ function setFilterGroups(arg){
                     ${arg[i].data.name}
                 </div>
                 <div class="group-message-1">
-                ${"<b>" + arg[i].data.lastSender + ": " + "</b>" + lastMsg}
+                ${"<b>" + lastSender + ": " + "</b>" + lastMessage}
                 </div>
             </div>
             <div class="group-container-3">
@@ -593,7 +621,7 @@ function setFilterGroups(arg){
             if(unsubscribe !== undefined){
                 unsubscribe();
             }
-            showChatScreen(arg[i].id, arg[i].data.name);
+            showChatScreen(arg[i].id, groups_array_name[i]);
         });
     }
 }
@@ -606,7 +634,7 @@ function showMessages(){
     }, 20);
 
     db
-    .collection("rooms")
+    .collection("_rooms728346_")
     .orderBy("serial", "desc")
     .onSnapshot((snapshot) => {
 
@@ -647,7 +675,7 @@ $("#logoutBtn1").on("click", function(){
         $(".section__1").css({filter: "brightness(1)"});
         $(".signup").css({transform: "scale(1)"});
         $(".login").css({transform: "scale(1)"});
-        $("#superbody2").css({transform: "translateX(" + viewWidth + "px"});
+        $("#superbody2").css({transform: "translateX(" + window.innerWidth + "px"});
         $(".title-bar-t").css({transform: "translateX(100vw)"});
 
         $("input").prop('disabled', false);
@@ -815,7 +843,7 @@ function showChats(){
                 parseInt(chatScreenValue[i].data.message.substring(9, 11)) <= 12
             ){
 
-                let color = (chatScreenValue[i].data.uid == "JNpDlB8a2gfMP1CZpEhBcJyOTNY2") ? "background: url(https://res.cloudinary.com/dpj9ddsjf/image/upload/v1610832281/coffee60_y9lnpm.png); background-size: cover; background-repeat: no-repeat; background-position: center; color: transparent; filter: sepia(0.2);" : "background: " +  color_array[chatScreenValue[i].data.color];
+                let color = (chatScreenValue[i].data.uid == "5mjMJm4YLCSFYrqUfUD2jcSGEde2") ? "background: url(https://res.cloudinary.com/dpj9ddsjf/image/upload/v1610832281/coffee60_y9lnpm.png); background-size: cover; background-repeat: no-repeat; background-position: center; color: transparent; filter: sepia(0.2);" : "background: " +  color_array[chatScreenValue[i].data.color];
 
                 let el = 
                 `
@@ -825,7 +853,7 @@ function showChats(){
                     </div>
                     <div class="sender-msg-container-2">
                         <div class="sender-name">
-                            <span class="s-n--1" style="color: ${(chatScreenValue[i].data.uid == "JNpDlB8a2gfMP1CZpEhBcJyOTNY2") ? "#504937" : color_array[chatScreenValue[i].data.color]}">
+                            <span class="s-n--1" style="color: ${(chatScreenValue[i].data.uid == "5mjMJm4YLCSFYrqUfUD2jcSGEde2") ? "#504937" : color_array[chatScreenValue[i].data.color]}">
                                 ${chatScreenValue[i].data.name}
                             </span>
                         </div>
@@ -851,20 +879,21 @@ function showChats(){
                 "AIMU" : status;
                 status = (chatScreenValue[i].data.status == "member") ?
                 "MEMBER" : status;
-                status = (chatScreenValue[i].data.status == "bot") ?
+                status = (chatScreenValue[i].data.status == "bot" || chatScreenValue[i].data.uid == "8KP1hhhRZrSRQN8TieNxpVND3z12") ?
                 "BOT" : status;
-                status = (chatScreenValue[i].data.status == "creator") ?
+                status = (chatScreenValue[i].data.status == "creator" || chatScreenValue[i].data.uid == "5mjMJm4YLCSFYrqUfUD2jcSGEde2") ?
                 "CREATOR" : status;
                 let statusStyle = chatScreenValue[i].data.status == "normal" ? "display: none" : "display: block";
 
                 // let color = color_array[chatScreenValue[i].data.color];
 
-                let color = (chatScreenValue[i].data.uid == "JNpDlB8a2gfMP1CZpEhBcJyOTNY2") ?
+                let color = (chatScreenValue[i].data.uid == "5mjMJm4YLCSFYrqUfUD2jcSGEde2") ?
                 "background: url(https://res.cloudinary.com/dpj9ddsjf/image/upload/v1610832281/coffee60_y9lnpm.png); background-size: cover; background-repeat: no-repeat; background-position: center; color: transparent; filter: sepia(0.2);" 
                 : (chatScreenValue[i].data.uid == "7gYhh228NlbSemddKuwGddczBZ03") ? "background: url(https://pbs.twimg.com/profile_images/1328121638680997894/pGQDvYl-_400x400.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; color: transparent; filter: sepia(0.2);border: 2px solid #4f8bcf;" :
-                "background: " +  color_array[chatScreenValue[i].data.color];
+                "background: " + color_array[chatScreenValue[i].data.color];
 
                 let msg = chatScreenValue[i].data.message;
+                msg = checker(msg) ? msg : "***";
                 msg = msg.replace(/</g,"");
                 msg = msg.replace(/>/g,"");
                 msg = msg.replace(/\/>/g,"");
@@ -877,7 +906,7 @@ function showChats(){
                     </div>
                     <div class="sender-msg-container">
                         <div class="sender-name">
-                            <span class="s-n--1" style="color: ${(chatScreenValue[i].data.uid == "JNpDlB8a2gfMP1CZpEhBcJyOTNY2") ? "#FF5722" : color_array[chatScreenValue[i].data.color]}">${chatScreenValue[i].data.name}</span>
+                            <span class="s-n--1" style="color: ${(chatScreenValue[i].data.uid == "5mjMJm4YLCSFYrqUfUD2jcSGEde2") ? "#FF5722" : color_array[chatScreenValue[i].data.color]}">${chatScreenValue[i].data.name}</span>
                             <span class="s-n--2" style="${statusStyle}">${status}</span>
                         </div>
                         <div class="sender-message">
@@ -924,7 +953,7 @@ function showChatScreen(id, name){
     $(".chat-aupc-loader").css({display: "block"});
     $(".chat-aupc-text").css({display: "none"});
 
-    unsubscribe = db.collection("rooms")
+    unsubscribe = db.collection("_rooms728346_")
         .doc(id)
         .collection("messages")
         .orderBy("timestamp", "asc")
@@ -952,7 +981,7 @@ function showChatScreen(id, name){
             }
 
             if(chatScreenValue.length > 20){
-                db.collection("rooms").doc(id).collection("messages").doc(chatScreenValue[0].id).delete().then(function() {
+                db.collection("_rooms728346_").doc(id).collection("messages").doc(chatScreenValue[0].id).delete().then(function() {
                     // console.log("Document successfully deleted!");
                 }).catch(function(error) {
                     // console.error("Error removing document: ", error);
@@ -973,7 +1002,7 @@ function skyraCheck(msg, username){
         if(msg == "s!toss"){
             let randomInt = Math.round(Math.random());
             let output = (randomInt == 0) ? "Heads" : "Tails";
-            db.collection("rooms")
+            db.collection("_rooms728346_")
             .doc(chatScreenID)
             .collection("messages")
             .add({
@@ -989,7 +1018,7 @@ function skyraCheck(msg, username){
         } else if(msg.toLowerCase().trim() == "s!dice"){
             let randomInt = Math.floor(Math.random() * 6) + 1;
             let output = `${username} rolled the dice and got ${randomInt}`;
-            db.collection("rooms")
+            db.collection("_rooms728346_")
             .doc(chatScreenID)
             .collection("messages")
             .add({
@@ -1005,7 +1034,7 @@ function skyraCheck(msg, username){
         } else if(msg.toLowerCase().trim() == "s!height"){
             let height = $(window).height();
             let output = `Your screen's document height is ${height}px`;
-            db.collection("rooms")
+            db.collection("_rooms728346_")
             .doc(chatScreenID)
             .collection("messages")
             .add({
@@ -1021,7 +1050,7 @@ function skyraCheck(msg, username){
         } else if(msg.toLowerCase().trim() == "s!width"){
             let width = $(window).width();
             let output = `Your screen's document width is ${width}px`;
-            db.collection("rooms")
+            db.collection("_rooms728346_")
             .doc(chatScreenID)
             .collection("messages")
             .add({
@@ -1042,7 +1071,7 @@ function skyraCheck(msg, username){
                 let punchline = data[0].punchline;
                 let setup = data[0].setup;
                 output = `${setup}... ${punchline}`;
-                db.collection("rooms")
+                db.collection("_rooms728346_")
                 .doc(chatScreenID)
                 .collection("messages")
                 .add({
@@ -1063,7 +1092,7 @@ function skyraCheck(msg, username){
             if(msg.toLowerCase().trim().replace("s!simp", "") == ""){
                 let randomInt = (username == "programmer" || username == "utsav") ? 0 : Math.floor(Math.random() * 100) + 1;
                 let output = `${username} is ${randomInt}% simp!`;
-                db.collection("rooms")
+                db.collection("_rooms728346_")
                 .doc(chatScreenID)
                 .collection("messages")
                 .add({
@@ -1080,7 +1109,7 @@ function skyraCheck(msg, username){
                 let nameOfSimp = msg.toLowerCase().trim().replace("s!simp", "").trim().toLowerCase();
                 let randomInt = (nameOfSimp == "programmer" || nameOfSimp == "utsav") ? 0 : Math.floor(Math.random() * 100) + 1;
                 let output = `${nameOfSimp} is ${randomInt}% simp!`;
-                db.collection("rooms")
+                db.collection("_rooms728346_")
                 .doc(chatScreenID)
                 .collection("messages")
                 .add({
@@ -1100,7 +1129,7 @@ function skyraCheck(msg, username){
             if(msg.toLowerCase().trim().replace("s!weather", "") == ""){
 
                 let output = `Hey ${username}, you forgot to enter the city. Here's an example: s!weather <london>`;
-                db.collection("rooms")
+                db.collection("_rooms728346_")
                 .doc(chatScreenID)
                 .collection("messages")
                 .add({
@@ -1122,7 +1151,7 @@ function skyraCheck(msg, username){
                         let weather = data.weather[0].main;
                         let cityNameIN = msg.toLowerCase().trim().replace("s!weather", "").trim().toLowerCase();
                         let output = `Today is ${(weather.toLowerCase() == "clouds" ? "Cloudy" : weather)} in ${cityNameIN}`;
-                        db.collection("rooms")
+                        db.collection("_rooms728346_")
                         .doc(chatScreenID)
                         .collection("messages")
                         .add({
@@ -1147,7 +1176,7 @@ function skyraCheck(msg, username){
             if(msg.toLowerCase().trim().replace("s!temp", "") == ""){
 
                 let output = `Hey ${username}, you forgot to enter the city. Here's an example: s!temp <london>`;
-                db.collection("rooms")
+                db.collection("_rooms728346_")
                 .doc(chatScreenID)
                 .collection("messages")
                 .add({
@@ -1169,7 +1198,7 @@ function skyraCheck(msg, username){
                         let weather = Math.floor(data.main.temp);
                         let cityNameIN = msg.toLowerCase().trim().replace("s!temp", "").trim().toLowerCase();
                         let output = `Today's temperature in ${cityNameIN} is ${weather}°F`;
-                        db.collection("rooms")
+                        db.collection("_rooms728346_")
                         .doc(chatScreenID)
                         .collection("messages")
                         .add({
@@ -1225,7 +1254,7 @@ $("#messageBtnContainer").on("click", function(){
             msgToSend = msgToSend.replace(/>/g,"");
             msgToSend = msgToSend.replace(/\/>/g,"");
 
-            db.collection("rooms")
+            db.collection("_rooms728346_")
             .doc(chatScreenID)
             .collection("messages")
             .add({
@@ -1243,7 +1272,7 @@ $("#messageBtnContainer").on("click", function(){
                 $("#messageBBLoading4").css({display: "none"});
                 $("#messageInput").focus();
                 skyraCheck(msgToSend, senderSim);
-                let roomsDocRef = db.collection("rooms").doc(chatScreenID);
+                let roomsDocRef = db.collection("_rooms728346_").doc(chatScreenID);
                 return roomsDocRef.update({
                     lastMessage: msgToSend,
                     lastSender: senderSim,
@@ -1311,7 +1340,7 @@ $(".sticker").on("click", function(){
     $("#messageBBLoading4").css({display: "flex"});
     $("body").css({pointerEvents: "none"});
 
-    db.collection("rooms")
+    db.collection("_rooms728346_")
     .doc(chatScreenID)
     .collection("messages")
     .add({
@@ -1332,7 +1361,7 @@ $(".sticker").on("click", function(){
         setTimeout(function(){
             $("#stickerOptsContainer").css({display: "none"});
         }, 200);
-        let roomsDocRef = db.collection("rooms").doc(chatScreenID);
+        let roomsDocRef = db.collection("_rooms728346_").doc(chatScreenID);
         return roomsDocRef.update({
             lastMessage: "[sticker]",
             lastSender: senderSim,
