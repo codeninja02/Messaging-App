@@ -11,7 +11,11 @@
 [![MIT License][license-shield]][license-url]
 -->
 
+<!--
 <img src="https://res.cloudinary.com/dpj9ddsjf/image/upload/v1611204105/icon_voskbr.png" align="right"/>
+-->
+
+<div float="right">💬</div>
 
 # 💬 Messaging App
 ### A simple messaging app using Firebase Authentication and Cloud Firestore.
