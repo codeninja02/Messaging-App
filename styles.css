@@ -3,6 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 /* font-family: 'Rubik', sans-serif; */
 
+/* ---- */
+/* filter: blur(1px) brightness(1.5) hue-rotate(45deg) opacity(0); */
+/* ---- */
+
 *{
     padding: 0;
     margin: 0;
@@ -20,6 +24,10 @@ body{
     margin: 0;
     overflow: hidden;
     background: #efefef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 textarea{
@@ -47,7 +55,7 @@ button:focus {
 
 @font-face {
     font-family: HelveticaNormal;
-    src: url("https://res.cloudinary.com/dp1xkuswt/raw/upload/v1597987314/Helvetica_uld9sz.ttf");
+    src: url("https://res.cloudinary.com/dpj9ddsjf/raw/upload/v1617019182/Helvetica_uv44sq.ttf");
 }
 
 a{
@@ -86,12 +94,13 @@ img{
 /* Section 0 */
 
 .superbody{
-    position: fixed;
     top: 0;
     left: 0;
     background: white;
     height: 100vh;
     width: 100%;
+    overflow: hidden;
+    /* border: 5px solid #7aadf8; */
 }
 
 /* Splash Screen */
