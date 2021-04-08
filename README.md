@@ -16,6 +16,8 @@
 # 💬 Messaging App
 ### A simple messaging app using Firebase Authentication and Cloud Firestore.
 
+- [Live Preview](https://messaging-app-02.netlify.app/)
+
 You can create your personal account using a username and a password, chat in various groups through text and gifs, supports pre-programmed bots and many more fun stuff!
 
 Technologies used in this web app are Firebase Firestore for database to store users messages and information, jQuery and other basic web technologies - HTML, CSS and JavaScript.
